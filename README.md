@@ -1,7 +1,7 @@
-Flask Heroku Sample
+Tensorflow Contrib Analyzer
 ====================
 
-A simple Python Flask example application that's ready to run on Heroku.
+Simple application depecting the usage of contrib api's.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
@@ -13,20 +13,8 @@ A simple Python Flask example application that's ready to run on Heroku.
 
 * `python app.py`
 
-## Screenshot
 
-![screenshot](https://i.imgur.com/wf74fxY.png)
+## Credits
 
-## Deploy
-
-* `heroku create`
-
-* `heroku addons:create heroku-postgresql:hobby-dev`
-
-* `git push heroku master`
-
-* Note: make sure you run `db.create_all()` to create the tables.
-
-## Contributors
-
-* [Yefim](https://twitter.com/yefim)
+* [Yefim](https://github.com/yefim/flask-heroku-sample) - Heroku Flask Boilerplate
+* [BlackrockDigital](https://github.com/BlackrockDigital/startbootstrap-new-age) - Bootstrap Template

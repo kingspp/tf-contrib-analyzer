@@ -88,14 +88,14 @@ section h2 {
     -webkit-transition: all .35s;
     transition: all .35s;
     font-family:'monospace', 'Catamaran', 'Helvetica', 'Arial', 'sans-serif';
-    font-weight: 400;
+    font-weight: 600;
     letter-spacing: 1px;
 }
 
 #mainNav .navbar-brand {
     color: #fdcc52;
     font-family: 'monospace','Catamaran', 'Helvetica', 'Arial', 'sans-serif';
-    font-weight: 400;
+    font-weight: 600;
     letter-spacing: 1px;
 }
 
