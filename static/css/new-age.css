@@ -87,15 +87,15 @@ section h2 {
     background-color: white;
     -webkit-transition: all .35s;
     transition: all .35s;
-    font-family: 'Catamaran', 'Helvetica', 'Arial', 'sans-serif';
-    font-weight: 200;
+    font-family:'monospace', 'Catamaran', 'Helvetica', 'Arial', 'sans-serif';
+    font-weight: 400;
     letter-spacing: 1px;
 }
 
 #mainNav .navbar-brand {
     color: #fdcc52;
-    font-family: 'Catamaran', 'Helvetica', 'Arial', 'sans-serif';
-    font-weight: 200;
+    font-family: 'monospace','Catamaran', 'Helvetica', 'Arial', 'sans-serif';
+    font-weight: 400;
     letter-spacing: 1px;
 }
 
@@ -110,10 +110,11 @@ section h2 {
 }
 
 #mainNav .navbar-nav > li > a {
-    font-size: 11px;
-    font-family: 'Lato', 'Helvetica', 'Arial', 'sans-serif';
+    font-size: 15px;
+    font-family: 'monospace', 'Lato', 'Helvetica', 'Arial', 'sans-serif';
     letter-spacing: 2px;
-    text-transform: uppercase;
+    font-weight: bold;
+
 }
 
 #mainNav .navbar-nav > li > a.active {
