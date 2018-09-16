@@ -15,13 +15,15 @@ body {
 }
 
 a {
-    color: #fdcc52;
+    /*color: #fdcc52;*/
+    color: #FFF;
     -webkit-transition: all .35s;
     transition: all .35s;
 }
 
 a:hover, a:focus {
-    color: #fcbd20;
+    /*color: #fcbd20;*/
+    color: #FFF;
 }
 
 hr {
