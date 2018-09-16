@@ -237,6 +237,7 @@ usage = json.load(open('/tmp/usage.json'))
 
 @dataclass
 class UsageStats(Munch):
+    id:int
     api: str
     total_usage: int
     total_stars: int
@@ -256,7 +257,7 @@ for k, records in usage.items():
         _forks += record['forks']
         _issues += record['open_issues']
     stats.append(
-        UsageStats(api=k, total_usage=len(records), total_stars=_stars, total_fork=_forks,
+        UsageStats(id=k,api=k, total_usage=len(records), total_stars=_stars, total_fork=_forks,
                    total_issues=_issues))
     json_stats.append([k, len(records), _stars, _forks, _issues])
 

@@ -1,6 +1,7 @@
 import os
-
+import json
 from flask import Flask, render_template, request, redirect, url_for
+
 # from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -8,6 +9,10 @@ app = Flask(__name__)
 DATABASE_URL = os.environ.get('DATABASE_URL', 'sqlite:////tmp/flask_app.db')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+
+usage = json.load(open('./static/data/usage.json'))
+
+
 # db = SQLAlchemy(app)
 
 
@@ -23,7 +28,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 
 @app.route('/', methods=['GET'])
 def index():
-  return render_template('index.html')#, users=User.query.all())
+    return render_template('index.html')  # , users=User.query.all())
+
+
+@app.route('/get_repos', methods=['GET'])
+def get_repos():
+    return json.dumps({"data": usage[request.args.get('api', type=str)]})
 
 
 # @app.route('/user', methods=['POST'])
@@ -34,6 +44,6 @@ def index():
 #   return redirect(url_for('index'))
 
 if __name__ == '__main__':
-  # db.create_all()
-  port = int(os.environ.get('PORT', 5000))
-  app.run(host='0.0.0.0', port=port, debug=True)
+    # db.create_all()
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
