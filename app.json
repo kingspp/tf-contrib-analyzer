@@ -1,0 +1,16 @@
+{
+  "name": "Flask Heroku Sample",
+  "description": "A sample Flask app on Heroku",
+  "keywords": [
+    "flask",
+    "python",
+    "sample"
+  ],
+  "repository": "https://github.com/kingspp/tf-contrib-analyzer",
+  "scripts": {
+    "postdeploy": ""
+  },
+  "addons": [
+    ""
+  ]
+}
