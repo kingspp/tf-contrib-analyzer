@@ -7,10 +7,5 @@
     "sample"
   ],
   "repository": "https://github.com/kingspp/tf-contrib-analyzer",
-  "scripts": {
-    "postdeploy": ""
-  },
-  "addons": [
-    ""
-  ]
+  
 }
