@@ -124,6 +124,19 @@
     </div>
 </header>
 
+
+<section class="features" id="features">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <iframe id='ifrme'
+                        src="https://kingspp.github.io/algo/2018/09/10/analysis-of-tensorflow-contrib-sunset.html"
+                        frameborder="0" style="overflow: hidden; height: 800%; width: 100%;"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Bootstrap core JavaScript -->
 <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -134,17 +147,19 @@
 <!-- Custom scripts for this template -->
 <script src="{{ url_for('static', filename='js/new-age.min.js') }}"></script>
 
+
+<script type="text/javascript" charset="utf8"
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 
 <script>
 
 
     $(document).ready(function () {
+
         String.prototype.replaceAll = function (search, replacement) {
             var target = this;
             return target.replace(new RegExp(search, 'g'), replacement);
         };
-
 
         function format(table_id) {
 

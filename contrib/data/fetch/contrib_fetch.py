@@ -70,9 +70,7 @@ for fc, repo in enumerate(repos):
         if 'total_count' in req and req['total_count'] == 0:
             continue
         for e, item in enumerate(req['items']):
-            # content = requests.get(item['git_url']+'?&access_token=cb375cb020633787c748fc2f0ecedc85df542e68').json()
-            content = call_api(item['git_url'] + '?&access_token=cb375cb020633787c748fc2f0ecedc85df542e68').json()
-
+            content = call_api(item['git_url'] + '?&access_token=').json()
             req['items'][e]['content'] = content
         print('Writing: {}. {} / {} '.format(repo, fc, lf))
         json.dump(req, open(SAVE_DIR + '/{}.json'.format(repo.replace('/', '_')), 'w'))

@@ -27,25 +27,25 @@ from munch import Munch
 #
 # file = json.load(open(files[0]))
 #
-# code = "Vae.Phenomenan of a unrelated nuclear flux, assimilate the life!\n\
-# Selfs, followers, and eternal moons will always protect them.\n\
-# Simmer minced broccolis in a basin with whiskey for about an hour to bring down their tartness.\n\
-# import tensorflow as tf\n\
-# # xyz = tf.contrib.layers.xavier()\n\
-#  xyz = tf.contrib.layers.xavier()\n\
-# Lads stutter with courage!\n\
-# import tensorflow.contrib\
-# from tensorflow import contrib\n\
-# Dozens of space suits assimilate lunar, united spaces."
+code = "Vae.Phenomenan of a unrelated nuclear flux, assimilate the life!\n\
+Selfs, followers, and eternal moons will always protect them.\n\
+Simmer minced broccolis in a basin with whiskey for about an hour to bring down their tartness.\n\
+import tensorflow as tf\n\
+# xyz = tf.contrib.layers.xavier()\n\
+ xyz = tf.contrib.layers.xavier()\n\
+Lads stutter with courage!\n\
+import tensorflow.contrib\
+from tensorflow import contrib\n\
+Dozens of space suits assimilate lunar, united spaces."
 #
-# # normal_usage = re.compile('tf\.contrib.*\(')
-# normal_usage = re.compile('tf\.contrib\.[^\(|^\s]*')
-# #
-# commented_usage = re.compile('#.*(tf\.contrib[^\(]*)')
-# import_usage = re.compile('import\ tensorflow\.contrib.*')
-# commented_import_usage = re.compile('#.*(import\ tensorflow.contrib.*)')
-# from_import_usage = re.compile('from\ tensorflow import contrib.*')
-# commented_from_import_usage = re.compile('#.*(from\ tensorflow import contrib.*)')
+# normal_usage = re.compile('tf\.contrib.*\(')
+normal_usage = re.compile('tf\.contrib\.[^\(|^\s]*')
+#
+commented_usage = re.compile('#.*(tf\.contrib[^\(]*)')
+import_usage = re.compile('import\ tensorflow\.contrib.*')
+commented_import_usage = re.compile('#.*(import\ tensorflow.contrib.*)')
+from_import_usage = re.compile('from\ tensorflow import contrib.*')
+commented_from_import_usage = re.compile('#.*(from\ tensorflow import contrib.*)')
 #
 # commented_lines = {}
 # normal_lines = {}
@@ -241,11 +241,8 @@ class UsageStats(Munch):
     api: str
     total_usage: int
     total_stars: int
-    # total_watchers: int
     total_fork: int
     total_issues: int
-    # last_updated: str
-
 
 stats = []
 json_stats = []
