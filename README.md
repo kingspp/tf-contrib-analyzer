@@ -11,7 +11,7 @@ Simple application depecting the usage of contrib api's.
 
 * `pipenv shell`
 
-* `python app.py`
+* `python3 app.py`
 
 
 ## Credits

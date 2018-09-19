@@ -36,7 +36,7 @@ from pymongo import MongoClient
 
 client = MongoClient()
 
-db = client.tf_sunset
+db = client.tf_contrib
 repos = db.repos
 
 # for topic in topics:
@@ -74,87 +74,92 @@ from dataclasses import dataclass
 import re
 import base64
 
+# @dataclass
+# class Record(Munch):
+#     repo_name: str
+#     line_no: int
+#     usage_type: str
+#     api_search_score: float
+#     topic_search_score: float
+#     api_query: str
+#     topic_query: str
+#     forks: int
+#     watchers: int
+#     stars: int
+#     created_on: str
+#     updated_on: str
+#     pushed_on: str
+#     file_url: str
+#     path: str
+#     size: int
+#     owner: str
+#     language: str
+#     open_issues: int
+#     api: str
+#
+#
+# class UsageType(enum.Enum):
+#     Normal = enum.auto()
+#     Commented = enum.auto()
+#
+#
+# normal_usage = re.compile('tf\.contrib\.[^\(|^\s]*')
+# commented_usage = re.compile('#.*(tf\.contrib[^\(|^\s]*)')
+#
+# API_USAGE = {}
+#
+# def usage(api, line_no, repo_name, usage_type, query_details):
+#     repo_details = repos.find_one({"full_name": repo_name})
+#     r = Record(repo_name=repo_name, line_no=line_no, usage_type=usage_type.name,
+#                topic_search_score=repo_details['score'], api_search_score=query_details['score'],
+#                file_url=query_details['html_url'], api_query='tf.contrib', topic_query=repo_details['topic'],
+#                forks=repo_details['forks'], watchers=repo_details['watchers'], stars=repo_details['stargazers_count'],
+#                size=repo_details['size'], created_on=repo_details['created_at'], pushed_on=repo_details['pushed_at'],
+#                updated_on=repo_details['updated_at'], owner=repo_name.split('/')[0], language=repo_details['language'],
+#                open_issues=repo_details['open_issues'], path=query_details['path'], api=api)
+#     if api in API_USAGE:
+#         API_USAGE[api].append(r)
+#     else:
+#         API_USAGE[api] = [r]
+#
+# for q_no, query in enumerate(queries.find()):
+#     lines = base64.b64decode(query['content']['content']).decode('utf-8').split('\n')
+#     for l_no, line in enumerate(lines):
+#         n_usage = normal_usage.findall(line)
+#         if n_usage:
+#             usage(n_usage[0], l_no+1, query['repository']['full_name'], UsageType.Normal, query)
+# json.dump(API_USAGE, open('/tmp/api_usage.json', 'w'))
 
-@dataclass
-class Record(Munch):
-    repo_name: str
-    line_no: int
-    usage_type: str
-    api_search_score: float
-    topic_search_score: float
-    api_query: str
-    topic_query: str
-    forks: int
-    watchers: int
-    stars: int
-    created_on: str
-    updated_on: str
-    pushed_on: str
-    file_url: str
-    path: str
-    size: int
-    owner: str
-    language: str
-    open_issues: int
-    api: str
 
-
-class UsageType(enum.Enum):
-    Normal = enum.auto()
-    Commented = enum.auto()
-
-
-normal_usage = re.compile('tf\.contrib\.[^\(|^\s]*')
-commented_usage = re.compile('#.*(tf\.contrib[^\(|^\s]*)')
-
-API_USAGE = {}
-
-def usage(api, line_no, repo_name, usage_type):
-    repo_details = repos.find_one({"full_name": repo_name})
-    query_details = queries.find_one({"repository.full_name": repo_name})
-    r = Record(repo_name=repo_name, line_no=line_no, usage_type=usage_type.name,
-               topic_search_score=repo_details['score'], api_search_score=query_details['score'],
-               file_url=query_details['html_url'], api_query='tf.contrib', topic_query=repo_details['topic'],
-               forks=repo_details['forks'], watchers=repo_details['watchers'], stars=repo_details['stargazers_count'],
-               size=repo_details['size'], created_on=repo_details['created_at'], pushed_on=repo_details['pushed_at'],
-               updated_on=repo_details['updated_at'], owner=repo_name.split('/')[0], language=repo_details['language'],
-               open_issues=repo_details['open_issues'], path=query_details['path'], api=api)
-    if api in API_USAGE:
-        API_USAGE[api].append(r)
-    else:
-        API_USAGE[api] = [r]
-
-
-for q_no, query in enumerate(queries.find()):
-    lines = base64.b64decode(query['content']['content']).decode('utf-8').split('\n')
-    for l_no, line in enumerate(lines):
-        c_usage = commented_usage.findall(line)
-        if c_usage:
-            usage(c_usage[0], l_no, query['repository']['full_name'], UsageType.Commented)
-            continue
-        n_usage = normal_usage.findall(line)
-        if n_usage:
-            usage(n_usage[0], l_no, query['repository']['full_name'], UsageType.Normal)
+API_USAGE = json.load(open('/tmp/api_usage.json'))
 
 
 @dataclass
 class UsageStats(Munch):
-    id:int
+    id: int
     api: str
     total_usage: int
     total_stars: int
     total_fork: int
     total_issues: int
+    created_on: str
+    updated_on: str
+
 
 stats = []
 
 for k, records in API_USAGE.items():
     _stars, _watchers, _forks, _issues, = 0, 0, 0, 0
+    _created_on, _last_updated_on = [], []
     for record in records:
         _stars += record['stars']
         _forks += record['forks']
         _issues += record['open_issues']
-    stats.append(
-        UsageStats(id=k,api=k, total_usage=len(records), total_stars=_stars, total_fork=_forks,
-                   total_issues=_issues))
+        _created_on.append(record['created_on'])
+        _last_updated_on.append(record['updated_on'])
 
+    stats.append(
+        UsageStats(id=k, api=k, total_usage=len(records), total_stars=_stars, total_fork=_forks,
+                   total_issues=_issues, updated_on=sorted(_last_updated_on)[-1], created_on=sorted(_created_on)[0]))
+
+json.dump({"data":stats}, open('/Users/prathyushsp/Git/tf-contrib-analyzer/static/data/stats.json', 'w'))

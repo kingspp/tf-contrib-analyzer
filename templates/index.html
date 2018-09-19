@@ -95,6 +95,8 @@
                         <th>Stars</th>
                         <th>Issues</th>
                         <th>Fork</th>
+                        <th>Created On</th>
+                        <th>Last Updated On</th>
 
                     </tr>
                     </thead>
@@ -106,6 +108,8 @@
                         <th>Stars</th>
                         <th>Issues</th>
                         <th>Fork</th>
+                        <th>Created On</th>
+                        <th>Last Updated On</th>
                     </tr>
                     </tfoot>
 
@@ -130,7 +134,8 @@
         <div class="row">
             <div class="col-md-12">
                 <iframe id='ifrme'
-                        src="https://kingspp.github.io/algo/2018/09/10/analysis-of-tensorflow-contrib-sunset.html"  frameborder="0" style="overflow: hidden; height: 800%; width: 100%;"></iframe>
+                        src="https://kingspp.github.io/algo/2018/09/10/analysis-of-tensorflow-contrib-sunset.html"
+                        frameborder="0" style="overflow: hidden; height: 800%; width: 100%;"></iframe>
             </div>
         </div>
     </div>
@@ -169,6 +174,8 @@
                 '<th>Size</th>' +
                 '<th>API Search Score</th>' +
                 '<th>Topic Search Score</th>' +
+                '<th>Created On</th>' +
+                '<th>Last Updated On</th>' +
                 '</thead>' +
                 '</table>';
         }
@@ -179,22 +186,31 @@
                 ajax: "/get_repos?api=" + vtask_id,
 
                 order: [[2, 'des']],
+                "columnDefs": [
+                    {"width": "10%", "targets": 0}
+                ],
                 columns: [
-                    {"data": "repo_name"},
+                    {"width": "10%" ,
+                        "data": "repo_name", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                            $(nTd).html("<a href='" + oData.file_url + '#L' + oData.line_no + "' style='color:#007bff'>" + oData.repo_name + '/' + oData.path + "</a>");
+                        }
+                    },
                     {"data": "line_no"},
                     {"data": "stars"},
                     {"data": "forks"},
                     {"data": "open_issues"},
                     {"data": "size"},
                     {"data": "api_search_score"},
-                    {"data": 'topic_search_score'}
+                    {"data": 'topic_search_score'},
+                    {"data": "created_on"},
+                    {"data": "updated_on"},
                 ]
             });
         }
 
 
         var dt = $('#example').DataTable({
-            ajax: "{{ url_for('static', filename="data/data.json") }}",
+            ajax: "{{ url_for('static', filename="data/stats.json") }}",
             order: [[2, 'des']],
             columns: [
                 {
@@ -208,6 +224,9 @@
                 {"data": "total_stars"},
                 {"data": "total_issues"},
                 {"data": "total_fork"},
+                {"data": "created_on"},
+                {"data": "updated_on"}
+
             ]
         });
 
