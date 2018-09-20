@@ -10,8 +10,6 @@ Simple application depecting the usage of contrib api's.
 
 
 
-
-
 ## Development Setup
 
 * `python3 app.py`
