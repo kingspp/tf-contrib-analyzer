@@ -85,8 +85,8 @@
         <div class="row h-100">
             <div class="col-lg-7 my-auto">
                 <div class="header-content mx-auto">
-                    <h1 class="mb-5" style="color: #FFF">Contrib Package has over <b>1173</b> API's, is used in
-                        <b>8864</b> lines across <b>487</b> projects! <br/><span style="font-size: 0.4em">- Source Github</span>
+                    <h1 class="mb-5" style="color: #FFF">Contrib Package has over <b>{{ total_api }}</b> API's, is used in
+                        <b>{{ total_lines }}</b> lines across <b>{{ total_projects }}</b> projects! <br/><span style="font-size: 0.4em">- Source Github ({{ date }})</span>
                     </h1>
                     {#              <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger">- Github</a>#}
                 </div>
@@ -118,7 +118,7 @@
         <div class="row h-100 custom_shadow">
 
             <div class="col-md-12" style="padding: 25px;">
-                <table id="example" class="display" width="100%">
+                <table id="contrib_table" class="display" width="100%">
                     <thead>
                     <tr>
                         <th></th>
@@ -242,8 +242,8 @@
         }
 
 
-        var dt = $('#example').DataTable({
-            ajax: "{{ url_for('static', filename="data/stats.json") }}",
+        var dt = $('#contrib_table').DataTable({
+            ajax: "{{ url_for('static', filename="data/stats_v1.json") }}",
             order: [[2, 'des']],
             columns: [
                 {
@@ -260,23 +260,27 @@
                 {"data": "created_on"},
                 {"data": "updated_on"}
 
-            ]
+            ],
+
         });
 
         var detailRows = [];
 
-        $('#example tbody').on('click', 'tr td.details-control', function () {
+        $('#contrib_table tbody').on( 'click', 'tr', function () {
             var tr = $(this).closest('tr');
             var row = dt.row(tr);
             var idx = $.inArray(tr.attr('id'), detailRows);
 
             if (row.child.isShown()) {
                 tr.removeClass('details');
+                $(this).removeClass('selected');
                 row.child.hide();
                 detailRows.splice(idx, 1);
             }
             else {
                 tr.addClass('details');
+                dt.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
                 var virtual_task_id = row.data()['api'];
                 var subtable_id = "subtable-" + virtual_task_id.replaceAll('.', '-');
                 row.child(format(subtable_id)).show();
