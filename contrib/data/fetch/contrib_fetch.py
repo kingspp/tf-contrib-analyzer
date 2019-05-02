@@ -17,7 +17,7 @@ import requests
 
 REPO_FETCH_DIR = '/Users/prathyushsp/Development/tf-contrib-analysis/repos'
 SAVE_DIR = '/Users/prathyushsp/Development/tf-contrib-analysis/contrib_usage_files/tensorflow.contrib/'
-API_BASE = 'https://api.github.com/search/code?q=tensorflow.contrib+repo:{}&per_page=100&access_token=&'
+API_BASE = 'https://api.github.com/search/code?q=tensorflow.contrib+repo:{}&per_page=100'
 files = glob.glob(REPO_FETCH_DIR + "/*/*.json")
 
 lf = len(files)
@@ -70,7 +70,7 @@ for fc, repo in enumerate(repos):
         if 'total_count' in req and req['total_count'] == 0:
             continue
         for e, item in enumerate(req['items']):
-            content = call_api(item['git_url'] + '?&access_token=').json()
+            content = call_api(item['git_url'] + '?').json()
             req['items'][e]['content'] = content
         print('Writing: {}. {} / {} '.format(repo, fc, lf))
         json.dump(req, open(SAVE_DIR + '/{}.json'.format(repo.replace('/', '_')), 'w'))
@@ -102,7 +102,7 @@ error_file_writer.close()
 
 # import os
 # print(
-#     'https://api.github.com/search/code?q=tf.contrib+repo:{}&per_page=100&access_token=&'.format(
+#     'https://api.github.com/search/code?q=tf.contrib+repo:{}&per_page=100'.format(
 #         'omimo/xRBM'))
 
 #

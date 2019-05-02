@@ -41,7 +41,7 @@ repos = db.repos
 def fetch_repos():
     topics = ['neural-nets', 'tensorflow', 'machine-learning', 'neural-networks', 'deeplearning', 'deep-learning',
               'tensorflow-contrib', 'distributed_training', 'artificial-intelligence', 'ai', 'tf']
-    API_BASE = 'https://api.github.com/search/repositories?q=topic:{}+language:python+stars:>=10&page={}&per_page=100&access_token=46d36c4c99a9ae5ac14599308ddb4ac746cc8f58&'
+    API_BASE = 'https://api.github.com/search/repositories?q=topic:{}+language:python+stars:>=10&page={}&per_page=100'
 
     for topic in topics:
         print(f'Starting {topic} topic')
@@ -60,7 +60,7 @@ def fetch_repos():
 
 
 def fetch_code():
-    API_BASE = 'https://api.github.com/search/code?q=tensorflow.contrib+repo:{}&per_page=100&access_token=338d25ce151498f2ed9d181f6e0228110da62c1e'
+    API_BASE = 'https://api.github.com/search/code?q=tensorflow.contrib+repo:{}&per_page=100'
 
     total_repos = repos.count()
     queries = db.queries
@@ -70,7 +70,7 @@ def fetch_code():
         if 'total_count' in req and req['total_count'] == 0 or 'items' not in req:
             continue
         for e, item in enumerate(req['items']):
-            content = query(item['git_url'] + '?&access_token=').json()
+            content = query(item['git_url'] + '?').json()
             req['items'][e]['content'] = content
             req['items'][e]['query'] = 'tf.contrib'
         queries.insert_many(req['items'])
