@@ -7,5 +7,5 @@
     "sample"
   ],
   "repository": "https://github.com/kingspp/tf-contrib-analyzer",
-  
+  "stack": "heroku-20"  
 }
