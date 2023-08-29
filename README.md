@@ -8,6 +8,11 @@ Simple application depecting the usage of contrib api's.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
+```
+# Heroku
+
+heroku stack:set heroku-20 -a tfplay
+```
 
 
 ## Development Setup
